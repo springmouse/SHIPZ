@@ -1,4 +1,5 @@
 #include "SFMLRenderClass.h"
+#include <iostream>
 
 
 
@@ -17,16 +18,64 @@ bool SFMLRenderClass::UpdateLoop()
 {
 	while (true)
 	{
-		if (window->pollEvent(m_event))
+		m_time = m_deltaTime.restart();
+
+		if (ScreenEvents() == false)
 		{
-			if (m_event.type == m_event.Closed)
-			{
-				return false;
-			}
+			return false;
 		}
+
+		gm.GameLoop(m_time.asSeconds());
 
 		RenderLoop();
 	}
+}
+
+bool SFMLRenderClass::ScreenEvents()
+{
+	window->pollEvent(m_event);
+
+
+	switch (m_event.type)
+	{
+		case sf::Event::Closed:
+			return false;
+
+		case sf::Event::LostFocus:
+			return true;
+
+		case sf::Event::GainedFocus:
+			return true;
+
+		case sf::Event::TextEntered:
+			return true;
+
+		case sf::Event::KeyPressed:
+			return true;
+
+		case sf::Event::KeyReleased:
+			return true;
+
+		case sf::Event::MouseButtonPressed:
+			return true;
+
+		case sf::Event::MouseButtonReleased:
+			return true;
+
+		case sf::Event::MouseMoved:
+			return true;
+
+		case sf::Event::MouseLeft:
+			return true;
+
+		case sf::Event::MouseEntered:
+			return true;
+	}
+
+
+
+	std::cout << "Event " << m_event.type << " Had No Switch StatMeant: SFMLRenderClass, ScreenEvents()" << std::endl;
+	return true;
 }
 
 void SFMLRenderClass::RenderLoop()
@@ -34,7 +83,7 @@ void SFMLRenderClass::RenderLoop()
 
 	window->clear();
 
-	//Darw to window
+	gm.RenderGame(window);
 
 	window->display();
 }
