@@ -6,7 +6,7 @@ GameManager::GameManager()
 {
 	myUnit = Unit();
 
-	unitTextures.loadFromFile("../Textures/LittleBro.png");
+	unitTextures.loadFromFile("../Textures/Fighter Sprites.png");
 
 	myUnit.Init(&unitTextures);
 }
@@ -23,5 +23,5 @@ void GameManager::GameLoop(float deltaTime)
 
 void GameManager::RenderGame(sf::RenderWindow * window)
 {
-	window->draw(myUnit.shape);
+	myUnit.RenderLoop(window);
 }
