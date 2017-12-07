@@ -29,13 +29,47 @@ Animation::~Animation()
 {
 }
 
-void Animation::RenderLoop(int row, sf::RenderWindow * window, sf::Vector2f pos)
+void Animation::RenderLoop(int row, sf::RenderWindow * window, sf::Vector2f pos, float rotaion)
 {
 	currImage.y = row;
 
 	uvRect.left = currImage.x * uvRect.width;
 	uvRect.top = currImage.y * uvRect.height;
 
+	m_shape.setRotation(rotaion);
+
+	m_shape.setTextureRect(uvRect);
+	m_shape.setPosition(pos);
+
+	window->draw(m_shape);
+}
+
+void Animation::RenderLoop(int row, sf::RenderWindow * window, sf::Vector2f pos, bool faceRight, bool faceUp)
+{
+	currImage.y = row;
+
+	if (faceRight)
+	{
+		uvRect.width = abs(uvRect.width);
+		uvRect.left = currImage.x * uvRect.width;
+	}
+	else
+	{
+		uvRect.left = (currImage.x + 1) * abs(uvRect.width);
+		uvRect.width = -abs(uvRect.width);
+	}
+
+	if (faceUp)
+	{
+		uvRect.height = abs(uvRect.height);
+		uvRect.top = currImage.y * uvRect.height;
+	}
+	else
+	{
+		uvRect.top = (currImage.y + 1) * abs(uvRect.height);
+		uvRect.height = -abs(uvRect.height);
+	}
+	
 	m_shape.setTextureRect(uvRect);
 	m_shape.setPosition(pos);
 

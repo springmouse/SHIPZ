@@ -9,7 +9,8 @@ public:
 	~Animation();
 
 	void Update(float deltaTime);
-	void RenderLoop(int row, sf::RenderWindow * window, sf::Vector2f pos);
+	void RenderLoop(int row, sf::RenderWindow * window, sf::Vector2f pos, float rotation);
+	void RenderLoop(int row, sf::RenderWindow * window, sf::Vector2f pos, bool faceRight, bool faceUp);
 
 public:
 	sf::IntRect uvRect;
